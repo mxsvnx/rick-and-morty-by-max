@@ -5,11 +5,8 @@ export default function Card({ type, item }) {
   const router = useRouter()
   const page = router.query.page || 1
 
-  return (
-    <Link
-      href={`/characters/${item.id}?page=${page}`}
-      className="bg-transparent text-white rounded-lg overflow-hidden shadow-md flex w-[360px] h-44 hover:ring-2 hover:ring-purple-500 transition"
-    >
+  const content = (
+    <>
       {type === 'character' && (
         <>
           <img
@@ -61,6 +58,19 @@ export default function Card({ type, item }) {
           <p className="text-sm text-gray-400">Дата выхода: {item.air_date}</p>
         </div>
       )}
+    </>
+  )
+
+  return type === 'character' ? (
+    <Link
+      href={`/characters/${item.id}?page=${page}`}
+      className="bg-transparent text-white rounded-lg overflow-hidden shadow-md flex w-[360px] h-44 hover:ring-2 hover:ring-purple-500 transition"
+    >
+      {content}
     </Link>
+  ) : (
+    <div className="bg-transparent text-white rounded-lg overflow-hidden shadow-md flex w-[360px] h-44">
+      {content}
+    </div>
   )
 }
