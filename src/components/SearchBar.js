@@ -1,41 +1,47 @@
 import { useState } from 'react'
 
 export default function SearchBar({ onSearch, showStatus = false }) {
-  const [input, setInput] = useState('')
+  const [name, setName] = useState('')
   const [status, setStatus] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSearch(input, status)
+    onSearch(name, status)
+  }
+
+  const handleStatusChange = (e) => {
+    const newStatus = e.target.value
+    setStatus(newStatus)
+    onSearch(name, newStatus) 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 w-full max-w-xl">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-2 mb-4">
       <input
-        type="text"
         name="search"
+        type="text"
         placeholder="Поиск по имени"
-        className="px-4 py-2 rounded bg-zinc-800 text-white flex-grow"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
+        className="px-4 py-2 rounded bg-zinc-800 text-white w-64"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
 
       {showStatus && (
         <select
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="px-4 py-2 rounded bg-zinc-800 text-white w-full sm:w-auto"
+          onChange={handleStatusChange}
+          className="px-3 py-2 rounded bg-zinc-800 text-white w-40"
         >
-          <option value="">Все статусы</option>
+          <option value="">Все</option>
           <option value="alive">Жив</option>
-          <option value="dead">Мертв</option>
+          <option value="dead">Мёртв</option>
           <option value="unknown">Неизвестно</option>
         </select>
       )}
 
       <button
         type="submit"
-        className="px-4 py-2 bg-black border border-purple-700 text-white rounded hover:bg-purple-900 transition w-full sm:w-auto"
+        className="px-4 py-2 bg-black rounded text-white hover:bg-zinc-700"
       >
         Найти
       </button>

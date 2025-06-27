@@ -29,10 +29,6 @@ export default function CharactersPage() {
     fetchData()
   }, [page, queryParams])
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [page])
-
   const handleSearch = (name, status) => {
     const params = new URLSearchParams()
     if (name) params.append('name', name)
